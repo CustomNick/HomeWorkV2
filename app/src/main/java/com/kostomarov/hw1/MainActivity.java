@@ -29,10 +29,7 @@ public class MainActivity extends AppCompatActivity implements NumberListFragmen
                 .replace(R.id.linear01, new NumberListFragment())
                 .commit();
 
-        if (savedInstanceState == null){
-
-        }
-        else {
+        if (savedInstanceState != null){
             checkFrag();
         }
     }
@@ -85,10 +82,7 @@ public class MainActivity extends AppCompatActivity implements NumberListFragmen
     protected void checkFrag(){
         final NumberDetailsFragment temp = (NumberDetailsFragment) getSupportFragmentManager().findFragmentByTag(TAG_DETAILS);
 
-        if (temp == null){
-
-        }
-        else {
+        if (temp != null){
             Bundle extras = temp.getArguments();
 
             final int number = extras.getInt(EXTRAS_NUMBER);
