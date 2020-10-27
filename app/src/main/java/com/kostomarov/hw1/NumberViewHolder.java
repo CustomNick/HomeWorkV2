@@ -3,7 +3,6 @@ package com.kostomarov.hw1;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
