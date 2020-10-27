@@ -6,17 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements NumberListFragment.IListener {
 
     protected static final String TAG_DETAILS = "DETAILS";
-    protected static final String EXTRAS_NUMBER = "NUMBER";
-
-    public static int[] numbers = new int[1000];
 
     public static int count = 100;
-
-    public boolean check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +20,28 @@ public class MainActivity extends AppCompatActivity implements NumberListFragmen
 
         setContentView(R.layout.activity_main);
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.linear01, new NumberListFragment())
-                .commit();
 
-        if (savedInstanceState != null){
-            checkFrag();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.linear01, new NumberListFragment())
+                    .commit();
+        }
+    }
+
+    public void addNumber(View view){
+        count++;
+        RecyclerView recycler = view.getRootView().findViewById(R.id.recycler);
+        if (recycler != null){
+            NumberAdapter adapter = (NumberAdapter) recycler.getAdapter();
+            if (adapter == null){
+                System.out.println("Adapter is null");
+            } else{
+                adapter.addNumber();
+            }
+        }
+        else {
+            System.out.println("Recycler is null");
         }
     }
 
@@ -39,35 +50,11 @@ public class MainActivity extends AppCompatActivity implements NumberListFragmen
         showDetails(number);
     }
 
-    @Override
-    public void onBackPressed() {
-        check = false;
-        getSupportFragmentManager()
-                .popBackStack("Recycler", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-    }
-
-    public void addNumber(View view){
-        count++;
-        RecyclerView recycler = this.findViewById(R.id.recycler);
-        if (recycler != null){
-            NumberAdapter adapter = (NumberAdapter) recycler.getAdapter();
-            if (adapter == null){
-                System.out.println("Adapter is null");
-            } else{
-                adapter.Notify();
-            }
-        }
-        else {
-            System.out.println("Recycler is null");
-        }
-    }
-
     protected void showDetails(int number) {
         if (number == 0) {
             return;
         }
 
-        check = true;
         System.out.println(number);
 
         final NumberDetailsFragment detailsFragment = NumberDetailsFragment.newInstance(number);
@@ -77,17 +64,5 @@ public class MainActivity extends AppCompatActivity implements NumberListFragmen
                 .replace(R.id.linear01, detailsFragment, TAG_DETAILS)
                 .addToBackStack("Recycler")
                 .commit();
-    }
-
-    protected void checkFrag(){
-        final NumberDetailsFragment temp = (NumberDetailsFragment) getSupportFragmentManager().findFragmentByTag(TAG_DETAILS);
-
-        if (temp != null){
-            Bundle extras = temp.getArguments();
-
-            final int number = extras.getInt(EXTRAS_NUMBER);
-
-            showDetails(number);
-        }
     }
 }

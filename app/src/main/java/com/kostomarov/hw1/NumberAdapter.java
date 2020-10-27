@@ -9,15 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NumberAdapter extends RecyclerView.Adapter<NumberViewHolder> {
     protected final NumberViewHolder.IListener mListener;
-    protected final int[] mData;
+    protected int mData;
 
 
-    public NumberAdapter(int[] data, NumberViewHolder.IListener listener) {
+    public NumberAdapter(int data, NumberViewHolder.IListener listener) {
         mListener = listener;
         mData = data;
     }
 
-    public void Notify(){
+    public void addNumber(){
+        mData++;
+
         this.notifyDataSetChanged();
     }
 
@@ -40,6 +42,6 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberViewHolder> {
 
     @Override
     public int getItemCount() {
-        return MainActivity.count;
+        return mData;
     }
 }

@@ -44,13 +44,10 @@ public class NumberListFragment extends Fragment {
 
         final RecyclerView recycler = view.findViewById(R.id.recycler);
 
-        recycler.setAdapter(new NumberAdapter(MainActivity.numbers, new NumberClickHandler()));
-        if (getResources().getBoolean(R.bool.is_horizontal)) {
-            recycler.setLayoutManager(new GridLayoutManager(requireContext(), 4));
-        }
-        else
-            recycler.setLayoutManager(new GridLayoutManager(requireContext(), 3));
+        recycler.setAdapter(new NumberAdapter(MainActivity.count, new NumberClickHandler()));
+        recycler.setLayoutManager(new GridLayoutManager(requireContext(), getResources().getInteger(R.integer.columns)));
     }
+
 
     @Override
     public void onDetach() {

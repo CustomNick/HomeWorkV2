@@ -1,6 +1,7 @@
 package com.kostomarov.hw1;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,7 +15,6 @@ public class NumberViewHolder extends RecyclerView.ViewHolder {
 
     protected final IListener mListener;
     protected final TextView mName;
-    protected final ImageView mImage;
 
     public NumberViewHolder(View itemView, IListener listener) {
         super(itemView);
@@ -22,12 +22,11 @@ public class NumberViewHolder extends RecyclerView.ViewHolder {
         mListener = listener;
 
         mName = itemView.findViewById(R.id.name);
-        mImage = itemView.findViewById(R.id.image);
 
         final View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            mListener.onNumberClicked(getAdapterPosition());
+                mListener.onNumberClicked(getAdapterPosition());
             }
         };
 
@@ -38,8 +37,8 @@ public class NumberViewHolder extends RecyclerView.ViewHolder {
     void bind(int number) {
         mName.setText(Integer.toString(number));
         if (number % 2 == 0)
-            mImage.setImageResource(R.color.color_red);
+            mName.setTextColor(Color.RED);
         else
-            mImage.setImageResource(R.color.color_blue);
+            mName.setTextColor(Color.BLUE);
     };
 }

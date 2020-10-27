@@ -1,10 +1,10 @@
 package com.kostomarov.hw1;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +38,6 @@ public class NumberDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final ImageView mImage = view.findViewById(R.id.image);
         final TextView mName = view.findViewById(R.id.name);
 
         Bundle extras = this.getArguments();
@@ -55,9 +54,9 @@ public class NumberDetailsFragment extends Fragment {
 
         mName.setText(Integer.toString(number));
         if (number % 2 == 0)
-            mImage.setImageResource(R.color.color_red);
+            mName.setTextColor(Color.RED);
         else
-            mImage.setImageResource(R.color.color_blue);
+            mName.setTextColor(Color.BLUE);
     }
 
 
