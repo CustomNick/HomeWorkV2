@@ -30,6 +30,8 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberViewHolder> {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View layout = inflater.inflate(R.layout.item, parent, false);
 
+
+
         return new NumberViewHolder(layout, mListener);
     }
 

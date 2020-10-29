@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +19,10 @@ public class NumberListFragment extends Fragment {
     }
 
     protected IListener mListener;
+    protected static final String COUNT = "COUNT";
+    protected static final int DEFAULT = 100;
+
+    protected static int count = 0;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -39,12 +44,36 @@ public class NumberListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (savedInstanceState == null){
+            if (count == 0)
+                count = DEFAULT;
+        }
+        else{
+            count = savedInstanceState.getInt(COUNT);
+            System.out.println(count);
+        }
 
         final RecyclerView recycler = view.findViewById(R.id.recycler);
 
-        recycler.setAdapter(new NumberAdapter(MainActivity.count, new NumberClickHandler()));
+        final NumberAdapter adapter = new NumberAdapter(count, new NumberClickHandler());
+
+        Button btn = requireActivity().findViewById(R.id.button);
+
+        final View.OnClickListener clickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                adapter.mData++;
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        btn.setOnClickListener(clickListener);
+
+        recycler.setAdapter(adapter);
         recycler.setLayoutManager(new GridLayoutManager(requireContext(), getResources().getInteger(R.integer.columns)));
     }
 
@@ -54,6 +83,14 @@ public class NumberListFragment extends Fragment {
         super.onDetach();
 
         mListener = null;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(COUNT, count);
+        System.out.println(count);
     }
 
     class NumberClickHandler implements NumberViewHolder.IListener {
