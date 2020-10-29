@@ -25,6 +25,19 @@ public class NumberListFragment extends Fragment {
     protected static int count = 0;
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            count = savedInstanceState.getInt(COUNT);
+        } else {
+            if (count == 0) {
+                count = DEFAULT;
+            }
+        }
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
